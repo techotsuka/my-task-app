@@ -12,6 +12,8 @@ import { MdDelete } from "react-icons/md";
 import { useFirebase } from "../hooks/useFirebase";
 import type { TaskData } from "../types/taskData";
 
+
+
 const Home = () => {
  const { loading, user, email, tasks, fetchDb, calculateTotalTaskCount, updateDb, entryDb, deleteDb, handleLogout  } =
    useFirebase(); 
@@ -26,21 +28,21 @@ const Home = () => {
    taskName: '',
    priority: '',
    status: '',
-   taskDescription: ''
+   taskDescription: '',
  })
   const [entryTask, setEntryTask] = useState<TaskData>({
    id: '',
    taskName: '',
    priority: '',
    status: '',
-   taskDescription: ''
+   taskDescription: '',
  })
    const [deleteTask, setDeleteTask] = useState<TaskData>({
    id: '',
    taskName: '',
    priority: '',
    status: '',
-   taskDescription: ''
+   taskDescription: '',
  })
  
  const toast = useToast()
@@ -55,7 +57,7 @@ const Home = () => {
    }
  }, [user]); // userが更新された時に実行
 
-  const handleUpdate = async () => {//追加：クリック時、DBデータ更新し、その後、更新反映されたDBデータを取得、ローディングが解除されたら、モーダルクローズ
+  const handleUpdate = async () => {//クリック時、DBデータ更新し、その後、更新反映されたDBデータを取得、ローディングが解除されたら、モーダルクローズ
    await updateDb(editTask);
    fetchDb(email)
    if (!loading) {
@@ -65,7 +67,7 @@ const Home = () => {
    }
  }
 
-  const handleEntry = async () => {//追加：クリック時、入力データの新規登録、もしくは既存データの更新を実施
+  const handleEntry = async () => {//クリック時、入力データの新規登録、もしくは既存データの更新を実施
    if (tasks.some((l) => l.taskName === entryTask.taskName)) {
      const existingTask = tasks.find((l) => l.taskName === entryTask.taskName);
      if (existingTask) {
@@ -76,7 +78,7 @@ const Home = () => {
      await entryDb(entryTask);
    }
    fetchDb(email)
-   setEntryTask({ id: "", taskName: "", priority: "",status: "",taskDescription: "", })
+   setEntryTask({ id: "", taskName: "", priority: "",status: "",taskDescription: "",})
    if (!loading) {
      setTimeout(() => {
        modalEntry.onClose()
@@ -84,7 +86,7 @@ const Home = () => {
    }
  };
 
-  const handleDelete = async () => {//追加：クリック時、入力データの新規登録、もしくは既存データの更新を実施
+  const handleDelete = async () => {//クリック時、入力データの新規登録、もしくは既存データの更新を実施
    await deleteDb(deleteTask);
    fetchDb(email)
    if (!loading) {
@@ -133,13 +135,14 @@ const Home = () => {
                    {tasks.map((task, index) => (
                      //mapメソッドでtasksのタイトルと時間を各々表示
                      <Tr key={index}>
+
                        <Td>{task.taskName}</Td>
                        <Td>{task.priority}</Td>
                        <Td>{task.status}</Td>
                        <Td>{task.taskDescription}</Td>
                        <Td>
 
-                         {/* 追加：編集用モーダルここから */}
+                         {/* 編集用モーダルここから */}
                          <Button variant='ghost' onClick={() => {
                            setEditTask(task)
                            modalEdit.onOpen()
@@ -229,7 +232,7 @@ const Home = () => {
 
                                  }}
                                >
-                                 データを更新
+                                 タスクを更新
                                </Button>
                                <Button onClick={() => {
                                  modalEdit.onClose()
@@ -243,7 +246,7 @@ const Home = () => {
                        </Td>
                        <Td>
 
-                        {/* 追加：削除用モーダルここから */}
+                        {/* 削除用モーダルここから */}
                          <Button variant='ghost'
                            onClick={() => {
                              setDeleteTask(task)
@@ -255,11 +258,11 @@ const Home = () => {
                          >
                            <ModalOverlay />
                            <ModalContent>
-                             <ModalHeader>データ削除</ModalHeader>
+                             <ModalHeader>タスク削除</ModalHeader>
                              <ModalCloseButton />
                              <ModalBody pb={6}>
                                <Box>
-                                 以下のデータを削除します。<br />
+                                 以下のタスクを削除します。<br />
                                  タスク名：{deleteTask.taskName}、優先順位:{deleteTask.priority}、状態:{deleteTask.status}、タスク内容:{deleteTask.taskDescription}
                                </Box>
                              </ModalBody>
@@ -297,7 +300,7 @@ const Home = () => {
                  colorScheme='green'
                  variant='outline'
                  onClick={modalEntry.onOpen}>
-                 新規データ登録
+                 新規タスク登録
                </Button>
              </Stack>
              <Modal
@@ -307,7 +310,7 @@ const Home = () => {
              >
                <ModalOverlay />
                <ModalContent>
-                 <ModalHeader>新規データ登録</ModalHeader>
+                 <ModalHeader>新規タスク登録</ModalHeader>
                  <ModalCloseButton />
                  <ModalBody pb={6}>
                    <FormControl>

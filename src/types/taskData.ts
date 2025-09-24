@@ -13,4 +13,5 @@ export type TaskData = {
     taskDescription: string,
     taskName: string,
     //userID: string,
+    //completion: boolean,
 }
