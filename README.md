@@ -2,7 +2,7 @@
 このシステムはタスク管理アプリです。会員登録が可能で、会員毎に複数のタスクを作成、編集、削除ができます。タスクの登録内容として、タスク名、優先順位、状態、タスク内容の4項目を入力可能です。
 # システム構成
 - TypeScript
-- React ver18.0
+- React 18
 - Firebase Firestore
 - Firebase Authentication
 - Firebase Hosting
